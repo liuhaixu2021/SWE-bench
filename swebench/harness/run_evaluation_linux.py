@@ -155,11 +155,6 @@ def run_instance(
         applied_patch = False
         for git_apply_cmd in GIT_APPLY_CMDS:
             val = container.exec_run(
-                "sed -i 's/\r$//' /tmp/patch.diff",
-                workdir=DOCKER_WORKDIR,
-                user=DOCKER_USER,
-            )
-            val = container.exec_run(
                 f"{git_apply_cmd} {DOCKER_PATCH}",
                 workdir=DOCKER_WORKDIR,
                 user=DOCKER_USER,
@@ -187,7 +182,7 @@ def run_instance(
             .strip()
         )
         logger.info(f"Git diff before:\n{git_diff_output_before}")
-        #import pdb; pdb.set_trace()
+
         eval_file = Path(log_dir / "eval.sh")
         eval_file.write_text(test_spec.eval_script)
         logger.info(
@@ -196,13 +191,8 @@ def run_instance(
         copy_to_container(container, eval_file, PurePosixPath("/eval.sh"))
 
         # Run eval script, write output to logs
-        container.exec_run(
-                "sed -i 's/\r$//' /eval.sh",
-                workdir=DOCKER_WORKDIR,
-                user=DOCKER_USER,
-        )
         test_output, timed_out, total_runtime = exec_run_with_timeout(
-            container, "bash /eval.sh", timeout
+            container, "/bin/bash /eval.sh", timeout
         )
         test_output_path = log_dir / LOG_TEST_OUTPUT
         logger.info(f"Test runtime: {total_runtime:_.2f} seconds")
@@ -517,7 +507,7 @@ def main(
         print("No instances to run.")
     else:
         # build environment images + run instances
-        if not rewrite_reports:
+        if namespace is None and not rewrite_reports:
             build_env_images(client, dataset, force_rebuild, max_workers)
         run_instances(
             predictions,

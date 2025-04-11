@@ -1,0 +1,1 @@
+python -m swebench.harness.run_evaluation --predictions_path gold --max_workers 1 --run_id validate-gold-verified --dataset_name princeto-nlp/SWE-bench_Verified --cache_level instance
