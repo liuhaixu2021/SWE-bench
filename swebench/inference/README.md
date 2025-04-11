@@ -8,9 +8,18 @@ In particular, we provide the following important scripts and sub-packages:
 - `run_live.py`, this script is used to generate model generations for new issues on GitHub in real time.
 
 ## Installation
+There are two ways to install the dependencies for this sub-package:
+
+If you just want to run `make_datasets` and `run_api.py`, you can install the dependencies for this sub-package by running the following command:
+```bash
+pip install -e ".[make_datasets]"
+```
+
+If you want to run `run_llama.py` and `run_live.py`, you can install the dependencies for this sub-package by running the following command, however you need to have a GPU with CUDA installed.
+
 To install the dependencies for this sub-package, you can run the following command:
 ```bash
-pip install -e .[inference]
+pip install -e ".[inference]"
 ```
 
 ## `make_datasets`

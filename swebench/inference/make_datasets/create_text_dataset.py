@@ -210,6 +210,7 @@ def main(
         with open(progress_files[split]) as f:
             for line in f:
                 datum = json.loads(line)
+                datum = extract_fields(datum)
                 if datum["instance_id"] not in valid_instance_ids:
                     invalid_instances.append(datum["instance_id"])
                     continue

@@ -44,18 +44,28 @@ setuptools.setup(
         "unidiff",
     ],
     extras_require={
-        "inference": [
+        "datasets": [
+            "protobuf",
+            "sentencepiece",
+            "tiktoken",
+            "transformers",
+            "openai",
             "anthropic",
-            "flash_attn",
+            "jedi",
+        ],
+        "inference": [
+            "torch",
+            "anthropic",
             "jedi",
             "openai",
             "peft",
             "protobuf",
             "sentencepiece",
             "tiktoken",
-            "torch",
             "transformers",
             "triton",
+            "flash_attn",
+            "requests",
         ],
         "test": [
             "pytest",
